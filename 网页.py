@@ -24,6 +24,10 @@ cp_options = {
 
 feature_names = ['年龄', '在职工龄', 'A2', 'A3', 'A4', 'A6', 'B4', 'B5', '工时分组', '生活满意度', '睡眠状况', '工作负担度']
 
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 可以根据你的系统选择合适的中文字体
+plt.rcParams['axes.unicode_minus'] = False
+
 # Streamlit 用户界面
 st.title("职业紧张预测 app")
 
@@ -178,15 +182,6 @@ def predict():
         except Exception as e:
             print(f"Error in force plot: {e}")
             # 如果 force plot 失败，尝试其他绘图方法
-            fonts = fm.findSystemFonts(fontpaths=None, fontext='ttf')
-            font_names = [fm.FontProperties(fname=fname).get_name() for fname in fonts]
-            if 'SimHei' in font_names:
-                plt.rcParams['font.sans-serif'] = ['SimHei']
-            elif 'Microsoft YaHei' in font_names:
-                plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
-            else:
-                plt.rcParams['font.sans-serif'] = [font_names[0]] if font_names else ['DejaVu Sans']
-            plt.rcParams['axes.unicode_minus'] = False
             shap.summary_plot(shap_values, data_df, show=False)
             plt.title('SHAP 值汇总图')
             plt.xlabel('特征')

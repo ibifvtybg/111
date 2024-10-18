@@ -27,18 +27,22 @@ feature_names = ['年龄', '在职工龄', 'A2', 'A3', 'A4', 'A6', 'B4', 'B5', '
 # Streamlit 用户界面
 st.title("职业紧张预测 app")
 
+# 添加说明性文本
+st.markdown("以下是职业紧张预测的输入字段：")
+
 # 年龄
-age = st.number_input("年龄：", min_value=1, max_value=120, value=50)
+age = st.number_input("年龄：", min_value=1, max_value=120, value=50, help="请输入您的年龄。")
 
 # 在职工龄
-service_years = st.number_input("在职工龄（年）：", min_value=0, max_value=40, value=5)
+service_years = st.number_input("在职工龄（年）：", min_value=0, max_value=40, value=5, help="请输入您的在职工龄。")
 
 # A2（性别）
 A2_options = {1: '女性', 0: '男性'}
 A2 = st.selectbox(
     "性别：",
     options=list(A2_options.keys()),
-    format_func=lambda x: A2_options[x]
+    format_func=lambda x: A2_options[x],
+    help="选择您的性别。"
 )
 
 # A3（学历）
@@ -46,7 +50,8 @@ A3_options = {1: '初中及以下', 2: '高中或中专', 3: '大专或高职', 
 A3 = st.selectbox(
     "学历：",
     options=list(A3_options.keys()),
-    format_func=lambda x: A3_options[x]
+    format_func=lambda x: A3_options[x],
+    help="选择您的学历。"
 )
 
 # A4（婚姻状况）
@@ -54,7 +59,8 @@ A4_options = {0: '未婚', 1: '已婚住在一起', 2: '已婚分居或异地', 
 A4 = st.selectbox(
     "婚姻状况：",
     options=list(A4_options.keys()),
-    format_func=lambda x: A4_options[x]
+    format_func=lambda x: A4_options[x],
+    help="选择您的婚姻状况。"
 )
 
 # A6（月收入）
@@ -62,7 +68,8 @@ A6_options = {1: '少于 3000 元', 2: '3000 - 4999 元', 3: '5000 - 6999 元', 
 A6 = st.selectbox(
     "月收入：",
     options=list(A6_options.keys()),
-    format_func=lambda x: A6_options[x]
+    format_func=lambda x: A6_options[x],
+    help="选择您的月收入范围。"
 )
 
 # B4（是否轮班）
@@ -70,7 +77,8 @@ B4_options = {0: '否', 1: '是'}
 B4 = st.selectbox(
     "是否轮班：",
     options=list(B4_options.keys()),
-    format_func=lambda x: B4_options[x]
+    format_func=lambda x: B4_options[x],
+    help="选择您是否轮班。"
 )
 
 # B5（是否需要上夜班）
@@ -78,7 +86,8 @@ B5_options = {0: '否', 1: '是'}
 B5 = st.selectbox(
     "是否需要上夜班：",
     options=list(B5_options.keys()),
-    format_func=lambda x: B5_options[x]
+    format_func=lambda x: B5_options[x],
+    help="选择您是否需要上夜班。"
 )
 
 # 工时分组
@@ -86,17 +95,18 @@ working_hours_group_options = {1: '少于 20 小时', 2: '20 - 30 小时', 3: '3
 working_hours_group = st.selectbox(
     "工时分组：",
     options=list(working_hours_group_options.keys()),
-    format_func=lambda x: working_hours_group_options[x]
+    format_func=lambda x: working_hours_group_options[x],
+    help="选择您的工时分组。"
 )
 
 # 生活满意度
-life_satisfaction = st.slider("生活满意度（1 - 5）：", min_value=1, max_value=5, value=3)
+life_satisfaction = st.slider("生活满意度（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的生活满意度。")
 
 # 睡眠状况
-sleep_status = st.slider("睡眠状况（1 - 5）：", min_value=1, max_value=5, value=3)
+sleep_status = st.slider("睡眠状况（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的睡眠状况。")
 
 # 工作负担度
-work_load = st.slider("工作负担度（1 - 5）：", min_value=1, max_value=5, value=3)
+work_load = st.slider("工作负担度（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的工作负担度。")
 
 
 def predict():

@@ -147,7 +147,7 @@ if st.button("预测"):
             )
     else:
             advice = "预测结果出现未知情况。"
-        )
+            )
 
     st.write(advice)
 

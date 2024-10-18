@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-这是一个临时的脚本文件。
-"""
-
 import streamlit as st
 import joblib
 import numpy as np
@@ -13,15 +6,15 @@ import shap
 import matplotlib.pyplot as plt
 
 # 加载模型
-file_path = r"C:/Users/18657/Desktop/长工时/XGBoost.pkl"
+file_path = r"best_model_1.pkl"
 model = joblib.load(file_path)
 
 # 定义特征选项
 cp_options = {
-    1: '重度职业紧张 (1)',
+    1: '重度职业紧张 (3)',
     2: '中度职业紧张 (2)',
-    3: '轻度职业紧张 (3)',
-    4: '无症状 (4)'
+    3: '轻度职业紧张 (1)',
+    4: '无症状 (0)'
 }
 
 # 定义特征名称
@@ -121,16 +114,32 @@ if st.button("预测"):
     # 根据预测结果生成建议
     probability = predicted_proba[predicted_class] * 100
 
-    if predicted_class == 1:
-        advice = (
-            f"根据我们的模型，您有较高的职业紧张。"
-            f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
-            "建议管理层关注该员工的工作状态，提供必要的支持和关怀。"
-        )
-    else:
-        advice = (
-            f"根据我们的模型，您患有职业紧张可能性较低。"
-            "请继续保持良好的工作氛围，鼓励员工的积极性。"
+        if predicted_class == 0:
+            advice = (
+                f"根据我们的模型，您无职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "请继续保持良好的工作和生活状态。"
+            )
+        elif predicted_class == 1:
+            advice = (
+                f"根据我们的模型，您有轻度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "建议您适当调整工作节奏，关注自身身心健康。"
+            )
+        elif predicted_class == 2:
+            advice = (
+                f"根据我们的模型，您有中度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "建议您寻求专业帮助，如心理咨询或与上级沟通调整工作安排。"
+            )
+        elif predicted_class == 3:
+            advice = (
+                f"根据我们的模型，您有重度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "强烈建议您立即采取行动，如休假、寻求医疗支持或与管理层协商改善工作环境。"
+            )
+        else:
+            advice = "预测结果出现未知情况。"
         )
 
     st.write(advice)

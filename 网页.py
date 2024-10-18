@@ -130,7 +130,7 @@ def predict():
                     "请继续保持良好的工作和生活状态。"
                  )
          elif predicted_class == 2:
-                    advice = (
+                advice = (
                     f"根据我们的模型，您有轻度职业紧张症状。"
                     f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
                     "建议您适当调整工作节奏，关注自身身心健康。"   )

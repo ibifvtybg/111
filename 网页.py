@@ -130,25 +130,25 @@ def predict():
         if predicted_class == 0:
             advice = (
                 f"根据我们的模型，您无职业紧张症状。"
-                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                f"模型预测该员工无职业紧张症状的概率为 {probability:.1f}%。"
                 "请继续保持良好的工作和生活状态。"
             )
         elif predicted_class == 1:
             advice = (
                 f"根据我们的模型，您有轻度职业紧张症状。"
-                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为轻度的概率为 {probability:.1f}%。"
                 "建议您适当调整工作节奏，关注自身身心健康。"
             )
         elif predicted_class == 2:
             advice = (
                 f"根据我们的模型，您有中度职业紧张症状。"
-                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为中度的概率为 {probability:.1f}%。"
                 "建议您寻求专业帮助，如心理咨询或与上级沟通调整工作。"
             )
         elif predicted_class == 3:
             advice = (
                 f"根据我们的模型，您有重度职业紧张症状。"
-                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为重度的概率为 {probability:.1f}%。"
                 "强烈建议您立即采取行动，如休假、寻求医疗支持或与管理层协商改善工作环境。"
             )
         else:

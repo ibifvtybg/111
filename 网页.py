@@ -22,8 +22,6 @@ cp_options = {
     4: '无症状 (4)'
 }
 
-feature_names = ['年龄', '在职工龄', 'A2', 'A3', 'A4', 'A6', 'B4', 'B5', '工时分组', '生活满意度', '睡眠状况', '工作负担度']
-
 # Streamlit 用户界面
 st.title("职业紧张预测")
 
@@ -162,7 +160,7 @@ def predict():
         if len(features[0])!= expected_feature_count:
             data_df = pd.DataFrame(padded_features[0].reshape(1, -1), columns=model_input_features)
         else:
-            data_df = pd.DataFrame(features[0].reshape(1, -1), columns=feature_names)
+            data_df = pd.DataFrame(features[0].reshape(1, -1), columns=model_input_features)
         explainer = shap.TreeExplainer(model)
         shap_values = explainer.shap_values(data_df)
 

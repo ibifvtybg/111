@@ -27,22 +27,18 @@ feature_names = ['年龄', '在职工龄', 'A2', 'A3', 'A4', 'A6', 'B4', 'B5', '
 # Streamlit 用户界面
 st.title("职业紧张预测 app")
 
-# 添加说明性文本
-st.markdown("以下是职业紧张预测的输入字段：")
-
 # 年龄
-age = st.number_input("年龄：", min_value=1, max_value=120, value=50, help="请输入您的年龄。")
+age = st.number_input("年龄：", min_value=1, max_value=120, value=50)
 
 # 在职工龄
-service_years = st.number_input("在职工龄（年）：", min_value=0, max_value=40, value=5, help="请输入您的在职工龄。")
+service_years = st.number_input("在职工龄（年）：", min_value=0, max_value=40, value=5)
 
 # A2（性别）
 A2_options = {1: '女性', 0: '男性'}
 A2 = st.selectbox(
     "性别：",
     options=list(A2_options.keys()),
-    format_func=lambda x: A2_options[x],
-    help="选择您的性别。"
+    format_func=lambda x: A2_options[x]
 )
 
 # A3（学历）
@@ -50,8 +46,7 @@ A3_options = {1: '初中及以下', 2: '高中或中专', 3: '大专或高职', 
 A3 = st.selectbox(
     "学历：",
     options=list(A3_options.keys()),
-    format_func=lambda x: A3_options[x],
-    help="选择您的学历。"
+    format_func=lambda x: A3_options[x]
 )
 
 # A4（婚姻状况）
@@ -59,8 +54,7 @@ A4_options = {0: '未婚', 1: '已婚住在一起', 2: '已婚分居或异地', 
 A4 = st.selectbox(
     "婚姻状况：",
     options=list(A4_options.keys()),
-    format_func=lambda x: A4_options[x],
-    help="选择您的婚姻状况。"
+    format_func=lambda x: A4_options[x]
 )
 
 # A6（月收入）
@@ -68,8 +62,7 @@ A6_options = {1: '少于 3000 元', 2: '3000 - 4999 元', 3: '5000 - 6999 元', 
 A6 = st.selectbox(
     "月收入：",
     options=list(A6_options.keys()),
-    format_func=lambda x: A6_options[x],
-    help="选择您的月收入范围。"
+    format_func=lambda x: A6_options[x]
 )
 
 # B4（是否轮班）
@@ -77,8 +70,7 @@ B4_options = {0: '否', 1: '是'}
 B4 = st.selectbox(
     "是否轮班：",
     options=list(B4_options.keys()),
-    format_func=lambda x: B4_options[x],
-    help="选择您是否轮班。"
+    format_func=lambda x: B4_options[x]
 )
 
 # B5（是否需要上夜班）
@@ -86,8 +78,7 @@ B5_options = {0: '否', 1: '是'}
 B5 = st.selectbox(
     "是否需要上夜班：",
     options=list(B5_options.keys()),
-    format_func=lambda x: B5_options[x],
-    help="选择您是否需要上夜班。"
+    format_func=lambda x: B5_options[x]
 )
 
 # 工时分组
@@ -95,18 +86,17 @@ working_hours_group_options = {1: '少于 20 小时', 2: '20 - 30 小时', 3: '3
 working_hours_group = st.selectbox(
     "工时分组：",
     options=list(working_hours_group_options.keys()),
-    format_func=lambda x: working_hours_group_options[x],
-    help="选择您的工时分组。"
+    format_func=lambda x: working_hours_group_options[x]
 )
 
 # 生活满意度
-life_satisfaction = st.slider("生活满意度（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的生活满意度。")
+life_satisfaction = st.slider("生活满意度（1 - 5）：", min_value=1, max_value=5, value=3)
 
 # 睡眠状况
-sleep_status = st.slider("睡眠状况（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的睡眠状况。")
+sleep_status = st.slider("睡眠状况（1 - 5）：", min_value=1, max_value=5, value=3)
 
 # 工作负担度
-work_load = st.slider("工作负担度（1 - 5）：", min_value=1, max_value=5, value=3, help="选择您的工作负担度。")
+work_load = st.slider("工作负担度（1 - 5）：", min_value=1, max_value=5, value=3)
 
 
 def predict():
@@ -136,29 +126,31 @@ def predict():
 
         # 根据预测结果生成建议
         probability = predicted_proba[predicted_class] * 100
+        print(f"原始概率值：{predicted_proba[predicted_class]}")
+        print(f"计算后的概率值：{probability}")
 
         if predicted_class == 0:
             advice = (
                 f"根据我们的模型，您无职业紧张症状。"
-                f"模型预测该员工无职业紧张症状的概率为 {probability:.1f}%。"
+                f"模型预测该员工无职业紧张症状的概率为 {probability:.2f}%。"
                 "请继续保持良好的工作和生活状态。"
             )
         elif predicted_class == 1:
             advice = (
                 f"根据我们的模型，您有轻度职业紧张症状。"
-                f"模型预测该员工职业紧张程度为轻度的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为轻度的概率为 {probability:.2f}%。"
                 "建议您适当调整工作节奏，关注自身身心健康。"
             )
         elif predicted_class == 2:
             advice = (
                 f"根据我们的模型，您有中度职业紧张症状。"
-                f"模型预测该员工职业紧张程度为中度的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为中度的概率为 {probability:.2f}%。"
                 "建议您寻求专业帮助，如心理咨询或与上级沟通调整工作。"
             )
         elif predicted_class == 3:
             advice = (
                 f"根据我们的模型，您有重度职业紧张症状。"
-                f"模型预测该员工职业紧张程度为重度的概率为 {probability:.1f}%。"
+                f"模型预测该员工职业紧张程度为重度的概率为 {probability:.2f}%。"
                 "强烈建议您立即采取行动，如休假、寻求医疗支持或与管理层协商改善工作环境。"
             )
         else:

@@ -98,7 +98,11 @@ sleep_status = st.slider("睡眠状况（1 - 5）：", min_value=1, max_value=5,
 # 工作负担度
 work_load = st.slider("工作负担度（1 - 5）：", min_value=1, max_value=5, value=3)
 
+
 def predict():
+    """
+    进行职业紧张预测并生成建议和可视化。
+    """
     try:
         feature_values = [
             age, service_years, A2, A3, A4, A6, B4, B5, working_hours_group, life_satisfaction, sleep_status, work_load
@@ -124,29 +128,31 @@ def predict():
         probability = predicted_proba[predicted_class] * 100
 
         if predicted_class == 1:
-                advice = (
-                    f"根据我们的模型，您无职业紧张症状。"
-                    f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
-                    "请继续保持良好的工作和生活状态。"
-                 )
-         elif predicted_class == 2:
-                advice = (
-                    f"根据我们的模型，您有轻度职业紧张症状。"
-                    f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
-                    "建议您适当调整工作节奏，关注自身身心健康。"   )
-         elif predicted_class == 3:
-                advice = (
-                    f"根据我们的模型，您有中度职业紧张症状。"
-                    f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
-                    "建议您寻求专业帮助，如心理咨询或与上级沟通调整工作。”)
+            advice = (
+                f"根据我们的模型，您无职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "请继续保持良好的工作和生活状态。"
+            )
+        elif predicted_class == 2:
+            advice = (
+                f"根据我们的模型，您有轻度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "建议您适当调整工作节奏，关注自身身心健康。"
+            )
+        elif predicted_class == 3:
+            advice = (
+                f"根据我们的模型，您有中度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "建议您寻求专业帮助，如心理咨询或与上级沟通调整工作。"
+            )
         elif predicted_class == 4:
-                advice = (
-                    f"根据我们的模型，您有重度职业紧张症状。"
-                    f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
-                    "强烈建议您立即采取行动，如休假、寻求医疗支持或与管理层协商改善工作环境。"
-             )
+            advice = (
+                f"根据我们的模型，您有重度职业紧张症状。"
+                f"模型预测该员工有职业紧张症状的概率为 {probability:.1f}%。"
+                "强烈建议您立即采取行动，如休假、寻求医疗支持或与管理层协商改善工作环境。"
+            )
         else:
-                advice = "预测结果出现未知情况。"
+            advice = "预测结果出现未知情况。"
 
         st.write(advice)
 
@@ -159,7 +165,8 @@ def predict():
         shap_values = explainer.shap_values(data_df)
 
         # 更加谨慎地处理 expected_value
-        base_value = explainer.expected_value if not isinstance(explainer.expected_value, list) else (explainer.expected_value[0] if len(explainer.expected_value) > 0 else None)
+        base_value = explainer.expected_value if not isinstance(explainer.expected_value, list) else (
+            explainer.expected_value[0] if len(explainer.expected_value) > 0 else None)
         if base_value is None:
             raise ValueError("Unable to determine base value for SHAP force plot.")
 
@@ -187,6 +194,7 @@ def predict():
         st.image("shap_summary_plot.png")
     except Exception as e:
         st.write(f"出现错误：{e}")
+
 
 if st.button("预测"):
     predict()
